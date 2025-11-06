@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "description": "Schéma des features pour le modèle de risque",
+  "features": [
+    {
+      "name": "zone_id",
+      "type": "string",
+      "description": "Identifiant unique de la zone",
+      "required": true
+    },
+    {
+      "name": "latitude",
+      "type": "float",
+      "description": "Latitude du centre de la zone",
+      "range": [-90, 90],
+      "required": true
+    },
+    {
+      "name": "longitude",
+      "type": "float",
+      "description": "Longitude du centre de la zone",
+      "range": [-180, 180],
+      "required": true
+    },
+    {
+      "name": "city",
+      "type": "string",
+      "description": "Ville (Ouagadougou, Bobo-Dioulasso, etc.)",
+      "required": true
+    },
+    {
+      "name": "report_count",
+      "type": "integer",
+      "description": "Nombre total de signalements dans la zone",
+      "min": 1,
+      "required": true
+    },
+    {
+      "name": "avg_time_between_reports",
+      "type": "float",
+      "description": "Temps moyen entre signalements en jours",
+      "min": 0,
+      "required": true
+    },
+    {
+      "name": "recent_reports_7d",
+      "type": "integer",
+      "description": "Nombre de signalements des 7 derniers jours",
+      "min": 0,
+      "required": true
+    },
+    {
+      "name": "recent_reports_30d",
+      "type": "integer",
+      "description": "Nombre de signalements des 30 derniers jours",
+      "min": 0,
+      "required": true
+    },
+    {
+      "name": "pending_ratio",
+      "type": "float",
+      "description": "Ratio de signalements non traités (0-1)",
+      "range": [0, 1],
+      "required": true
+    },
+    {
+      "name": "police_reports_ratio",
+      "type": "float",
+      "description": "Ratio de signalements nécessitant police (0-1)",
+      "range": [0, 1],
+      "required": true
+    },
+    {
+      "name": "spatial_density",
+      "type": "float",
+      "description": "Densité spatiale (signalements par km²)",
+      "min": 0,
+      "required": true
+    },
+    {
+      "name": "risk_level",
+      "type": "integer",
+      "description": "Niveau de risque (0=low, 1=medium, 2=high, 3=critical)",
+      "range": [0, 3],
+      "required": true,
+      "is_label": true
+    }
+  ],
+  "target_variable": "risk_level",
+  "feature_count": 11
+}

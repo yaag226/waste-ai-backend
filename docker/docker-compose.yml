@@ -1,0 +1,71 @@
+# ============================================
+# WASTE AI BACKEND - DOCKER COMPOSE
+# ============================================
+
+version: '3.8'
+
+services:
+  # Backend IA
+  waste-ai-backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: waste-ai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-waste_management}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres}
+    volumes:
+      - ../trained_models:/app/trained_models
+      - ../datasets:/app/datasets
+      - ../logs:/app/logs
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    networks:
+      - waste-ai-network
+
+  # PostgreSQL (Laravel)
+  postgres:
+    image: postgres:15-alpine
+    container_name: waste-ai-postgres
+    environment:
+      - POSTGRES_DB=${DB_NAME:-waste_management}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - waste-ai-network
+    restart: unless-stopped
+
+  # pgAdmin (optionnel)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: waste-ai-pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@waste-ai.local
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    networks:
+      - waste-ai-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  waste-ai-network:
+    driver: bridge
