@@ -454,7 +454,7 @@ Ce projet est sous licence **MIT**. Voir [LICENSE](LICENSE) pour plus de détail
 ## 👨‍💻 Auteurs
 
 - **Waste Management AI Team**
-- Contact: [email@example.com](mailto:email@example.com)
+- Contact: [aliouyankini@gmail.com](mailto:aliouyankini@gmail.com)
 
 ---
 
